@@ -24,10 +24,10 @@ class Sp2LS{
     }
     public:~Sp2LS(){
         for(Node<CL1>* op_TmpC= cp_Start;
-            op_TmpC != nullptr;
-            op_TmpC = op_TmpC->cp_Next){
-
-           delete op_TmpC;
+            op_TmpC != nullptr;){
+            Node<CL1>* op_TmpN= op_TmpC->cp_Next;
+            delete op_TmpC;
+            op_TmpC = op_TmpN;
         }
     }
 
@@ -48,7 +48,6 @@ class Sp2LS{
             op_Node->cp_Prev = nullptr;
             cp_Start = op_Node;
             cp_Curr = op_Node;
-
         }
         else{
             op_Node->cp_Prev = cp_Curr;
@@ -65,11 +64,22 @@ class Sp2LS{
         }
         else{
             Node<CL1>* op_TmpC = cp_Start;
-            for(int i_Ct= 0; i_Ct< i_Ind + 1; i_Ct++){
-                if(i_Ct == 0){
-                    continue;
+            if(i_Ind< (i_NumNd / 2)){
+                for(int i_Ct= 0; i_Ct< i_Ind + 1; i_Ct++){
+                    if(i_Ct == 0){
+                        continue;
+                    }
+                    op_TmpC = op_TmpC->cp_Next;
                 }
-                op_TmpC = op_TmpC->cp_Next;
+            }
+            else{
+                op_TmpC = cp_Curr;
+                for(int i_Ct= i_NumNd -1; i_Ct>= i_Ind; i_Ct--){
+                    if(i_Ct == (i_NumNd -1)){
+                        continue;
+                    }
+                    op_TmpC = op_TmpC->cp_Prev;
+                }
             }
 
             if(i_Ind == 0){
@@ -107,11 +117,14 @@ int main(){
     o_LS.fn_AddNode(6);
     o_LS.fn_AddNode(4);
     o_LS.fn_AddNode(2);
+    o_LS.fn_AddNode(8);
+    o_LS.fn_AddNode(1);
 
     o_LS.fn_Trace();
 
-    o_LS.fn_DelNode(0);
+    o_LS.fn_DelNode(5);
     o_LS.fn_DelNode(1);
+    o_LS.fn_DelNode(0);
     o_LS.fn_Trace();
     return 0;
 }
