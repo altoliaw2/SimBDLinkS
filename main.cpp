@@ -65,7 +65,10 @@ class Sp2LS{
         }
         else{
             Node<CL1>* op_TmpC = cp_Start;
-            for(int i_Ct= 1; i_Ct< i_Ind; i_Ct++){
+            for(int i_Ct= 0; i_Ct< i_Ind + 1; i_Ct++){
+                if(i_Ct == 0){
+                    continue;
+                }
                 op_TmpC = op_TmpC->cp_Next;
             }
 
